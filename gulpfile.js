@@ -20,8 +20,7 @@ gulp.task('clean', function() {
 
 //Builds The CSS file
 gulp.task('styles', function() {
-	return gulp.src(styles_path)
-	       .pipe(sass()) //Compile from SASS
+	return sass(styles_path) //Compile from SASS
 		   .pipe(concat('style.min.css')) //Concatenate into one file
 		   .pipe(autoprefixer({  //Add prefixes for any browser with more than 1% market share
 		   		browsers: ['> 1%'],
