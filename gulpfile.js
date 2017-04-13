@@ -6,6 +6,7 @@ var browserSync  = require("browser-sync").create();
 var autoprefixer = require("gulp-autoprefixer");
 var htmlmin = require("gulp-htmlmin");
 var del = require('del');
+var rename = require('gulp-rename');
 
 var styles_path = 'src/**/*.+(scss|sass|css)';
 var html_path = 'src/**/*.html';
@@ -35,6 +36,7 @@ gulp.task('styles', function() {
 gulp.task('html', function() {
 	return gulp.src(html_path)
 		   .pipe(htmlmin({ collapseWhitespace: true, minifyJS: true })) //minify
+		   .pipe(rename({basename: 'index'}))
 	       .pipe(gulp.dest('dist'))
 		   .pipe(browserSync.reload({ stream: true }))
 });
