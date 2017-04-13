@@ -22,7 +22,7 @@ gulp.task('clean', function() {
 gulp.task('styles', function() {
 	return gulp.src(styles_path)
 	       .pipe(sass()) //Compile from SASS
-		   .pipe(concat('style.min.css')) //Concatonate into one file
+		   .pipe(concat('style.min.css')) //Concatenate into one file
 		   .pipe(autoprefixer({  //Add prefixes for any browser with more than 1% market share
 		   		browsers: ['> 1%'],
 				cascade: false
