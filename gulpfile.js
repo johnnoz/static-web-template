@@ -9,8 +9,8 @@ var del = require('del');
 var rename = require('gulp-rename');
 
 var styles_path = 'src/**/*.+(scss|sass|css)';
-var html_path = 'src/**/*.html';
-var static_path = 'src/**/*.+(svg|png|jpg|woff|eot|ttf|xml|txt|json)';
+var html_path = ['src/**/*.html', '!src/**/404.html'];
+var static_path = ['src/**/*.+(svg|png|jpg|woff|eot|ttf|xml|txt|json|js)', 'src/**/404.html'];
 
 //Deletes the current dist folder so that it can be rebuilt
 gulp.task('clean', function() {
