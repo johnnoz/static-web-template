@@ -15,7 +15,7 @@ var styles_path = 'src/**/*.+(scss|sass|css)';
 var pages_path = 'src/pages/*.html';
 var special_path = 'src/special/*.html';
 var partials_path = 'src/partials/';
-var static_path = 'src/**/*.+(svg|png|jpg|woff|eot|ttf|xml|txt|json)';
+var assets_path = 'src/assets/*';
 var js_path = 'src/**/*.js';
 
 //Deletes the current dist folder so that it can be rebuilt
@@ -72,8 +72,8 @@ gulp.task('special', function() {
 });
 
 //Moves images, fonts, etc. to dist folder
-gulp.task('static', function() {
-	return gulp.src(static_path)
+gulp.task('assets', function() {
+	return gulp.src(assets_path)
 		.pipe(gulp.dest('dist'))
 		.pipe(browserSync.reload({ stream: true }))
 });
@@ -84,11 +84,13 @@ gulp.task('browserSync', function() {
 });
 
 //Cleans, runs the scripts and serves from dist
-gulp.task('serve', ['clean', 'browserSync', 'styles', 'static', 'pages', 'special'], function() {
+gulp.task('serve', ['clean', 'browserSync', 'styles', 'assets', 'pages', 'special'], function() {
 	gulp.watch(styles_path, ['styles']);
 	gulp.watch(pages_path, ['pages']);
-	gulp.watch(static_path, ['static'])
+	gulp.watch(partials_path, ['pages']);
+    gulp.watch(special_path, ['special']);
+	gulp.watch(assets_path, ['assets'])
 });
 
 //Builds without serving
-gulp.task('build', ['clean', 'styles', 'static', 'pages', 'special']);
+gulp.task('build', ['clean', 'styles', 'assets', 'pages', 'special']);
