@@ -12,3 +12,5 @@ static website hosting but should also be compatible with any Apache style serve
 - Run `gulp serve` to develop locally
 - Run `gulp build` to build for production
 - After building, upload the `dist` folder to your server
+- Alternatively, there is a `buildspec.yml` file which can build your site with
+[AWS CodeBuild](https://aws.amazon.com/codebuild/).

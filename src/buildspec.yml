@@ -1,0 +1,13 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - "npm install gulp -g"
+      - "npm install"
+  build:
+    commands:
+      - "gulp build"
+artifacts:
+  base-directory: "dist"
+  files:
+    - "*"
