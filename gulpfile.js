@@ -9,7 +9,10 @@ var del = require('del');
 var rename = require('gulp-rename');
 var nunjucks = require('gulp-nunjucks-render');
 
+//User Settings
+//TODO: Move these into a separate file
 var home_page = 'home'; //Which page is at root
+var page_url = 'https://example.com/'; //Base URL of the site
 
 var styles_path = 'src/**/*.+(scss|sass|css)';
 var pages_path = 'src/pages/*.html';

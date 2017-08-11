@@ -20,6 +20,11 @@ original filenames.
 
 Stylesheets and scripts can be placed wherever is convenient.
 
+The following settings are in `gulpfile.js`:
+
+- `home_page`: the main page of the site. This page will be at the root of the website.
+- `page_url`: the root url that the page will be deployed to.
+
 ## Deployment
 - Run `gulp build` to build for production
 - After building, upload the `dist` folder to your server
