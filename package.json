@@ -17,6 +17,8 @@
     "gulp-clean-css": "^3.0.4",
     "gulp-concat": "^2.6.1",
     "gulp-htmlmin": "^3.0.0",
+    "gulp-minify": "^1.0.0",
+    "gulp-nunjucks-render": "^2.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.1.1"
   }
