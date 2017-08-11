@@ -8,6 +8,7 @@ var htmlmin = require("gulp-htmlmin");
 var del = require('del');
 var rename = require('gulp-rename');
 var nunjucks = require('gulp-nunjucks-render');
+var sitemap = require('gulp-sitemap');
 
 //User Settings
 //TODO: Move these into a separate file
@@ -20,6 +21,7 @@ var special_path = 'src/special/*.html';
 var partials_path = 'src/partials/';
 var assets_path = 'src/assets/*';
 var js_path = 'src/**/*.js';
+var sitemap_path = 'dist/**/*.html';
 
 //Deletes the current dist folder so that it can be rebuilt
 gulp.task('clean', function() {
@@ -65,6 +67,16 @@ gulp.task('pages', function() {
 		.pipe(browserSync.reload({ stream: true }))
 });
 
+//Generate the sitemap
+gulp.task('sitemap', ['pages'], function() {
+	return gulp.src(sitemap_path)
+		.pipe(sitemap({
+			siteUrl: page_url
+		}))
+		.pipe(gulp.dest('dist'))
+		.pipe(browserSync.reload({ stream: true }))
+});
+
 //Move special pages (such as 404)
 gulp.task('special', function() {
 	return gulp.src(special_path)
@@ -87,13 +99,13 @@ gulp.task('browserSync', function() {
 });
 
 //Cleans, runs the scripts and serves from dist
-gulp.task('serve', ['clean', 'browserSync', 'styles', 'assets', 'pages', 'special'], function() {
+gulp.task('serve', ['clean', 'browserSync', 'styles', 'assets', 'pages', 'sitemap', 'special'], function() {
 	gulp.watch(styles_path, ['styles']);
-	gulp.watch(pages_path, ['pages']);
+	gulp.watch(pages_path, ['pages', 'sitemap']);
 	gulp.watch(partials_path, ['pages']);
     gulp.watch(special_path, ['special']);
 	gulp.watch(assets_path, ['assets'])
 });
 
 //Builds without serving
-gulp.task('build', ['clean', 'styles', 'assets', 'pages', 'special']);
+gulp.task('build', ['clean', 'styles', 'assets', 'pages', 'sitemap', 'special']);
