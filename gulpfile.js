@@ -11,9 +11,9 @@ var nunjucks = require('gulp-nunjucks-render');
 var sitemap = require('gulp-sitemap');
 
 //User Settings
-//TODO: Move these into a separate file
-var home_page = 'home'; //Which page is at root
-var page_url = 'https://example.com/'; //Base URL of the site
+var config = require("./config.json");
+var home_page = config.root; //Which page is at root
+var page_url = config.url; //Base URL of the site
 
 var styles_path = 'src/**/*.+(scss|sass|css)';
 var pages_path = 'src/pages/*.html';
