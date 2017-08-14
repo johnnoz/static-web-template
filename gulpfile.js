@@ -9,11 +9,15 @@ var del = require('del');
 var rename = require('gulp-rename');
 var nunjucks = require('gulp-nunjucks-render');
 var sitemap = require('gulp-sitemap');
+var s3 = require('gulp-s3-upload')({ useIAM: 'true' });
 
 //User Settings
 var config = require("./config.json");
 var home_page = config.root; //Which page is at root
 var page_url = config.url; //Base URL of the site
+var qa_s3_bucket = config.qa_s3_bucket; //Bucket for QA deployment
+var live_s3_bucket = config.live_s3_bucket; //Bucket for live deployment
+var metadata = config.metadata; //File metadata
 
 var styles_path = 'src/**/*.+(scss|sass|css)';
 var pages_path = 'src/pages/*.html';
@@ -22,6 +26,7 @@ var partials_path = 'src/partials/';
 var assets_path = 'src/assets/*';
 var js_path = 'src/**/*.js';
 var sitemap_path = 'dist/**/*.html';
+var output_path = 'dist/**/*';
 
 //Deletes the current dist folder so that it can be rebuilt
 gulp.task('clean', function() {
@@ -91,6 +96,24 @@ gulp.task('assets', function() {
 	return gulp.src(assets_path)
 		.pipe(gulp.dest('dist'))
 		.pipe(browserSync.reload({ stream: true }))
+});
+
+gulp.task('deploy-qa', ['build'], function() {
+    gulp.src(output_path)
+		.pipe(s3({
+			Bucket: qa_s3_bucket,
+			ACL: 'public-read',
+			Metadata: metadata
+		}))
+});
+
+gulp.task('deploy-live', ['build'], function() {
+	gulp.src(output_path)
+		.pipe(s3({
+			Bucket: live_s3_bucket,
+			ACL: 'public-read',
+			Metadata: metadata
+		}))
 });
 
 //Runs the server

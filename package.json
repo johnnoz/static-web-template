@@ -21,6 +21,7 @@
     "gulp-nunjucks-render": "^2.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.1.1",
+    "gulp-s3-upload": "^1.6.6",
     "gulp-sitemap": "^4.2.0"
   }
 }
