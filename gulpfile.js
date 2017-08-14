@@ -1,5 +1,5 @@
 var gulp = require("gulp");
-var sass = require("gulp-ruby-sass");
+var sass = require("gulp-sass");
 var concat = require("gulp-concat");
 var cleanCSS =  require("gulp-clean-css");
 var browserSync  = require("browser-sync").create();
@@ -37,8 +37,9 @@ gulp.task('clean', function() {
 
 //Builds The CSS file
 gulp.task('styles', function() {
-	return sass(styles_path) //Compile from SASS
+	return gulp.src(styles_path) //Compile from SASS
 		.pipe(concat('style.min.css')) //Concatenate into one file
+		.pipe(sass())
 		.pipe(autoprefixer({  //Add prefixes for any browser with more than 1% market share
 			browsers: ['> 1%'],
 			cascade: false
