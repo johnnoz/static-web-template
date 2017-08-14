@@ -8,6 +8,7 @@ also be compatible with any Apache style server.
 - Clone this repository and change the origin to your new repository
 - Install [NPM](https://www.npmjs.com/)
 - Install the dependencies: `npm install` (You will need to have ruby and gem installed)
+- Edit `config.json` with your details.
 
 ## Development
 Run `gulp serve` to develop locally. The following directories are relevant to your content:
@@ -20,13 +21,17 @@ original filenames.
 
 Stylesheets and scripts can be placed wherever is convenient.
 
-The following settings are in `gulpfile.js`:
+The following settings are in `config.json`:
 
 - `home_page`: the main page of the site. This page will be at the root of the website.
 - `page_url`: the root url that the page will be deployed to.
+- `qa_s3_bucket`: the name of the S3 bucket for QA deployment.
+- `live_s3_bucket`: the name of the S3 bucket for live deployment.
+- `metadata`: key value pairs for file metadata.
 
 ## Deployment
 - Run `gulp build` to build for production
-- After building, upload the `dist` folder to your server
+- After building, upload the `dist` folder to your server (There are gulp tasks to do this
+for S3)
 - Alternatively, there is a `buildspec.yml` file which can build your site with
 [AWS CodeBuild](https://aws.amazon.com/codebuild/).
