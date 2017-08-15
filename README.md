@@ -7,7 +7,7 @@ also be compatible with any Apache style server.
 ## Initial Setup
 - Clone this repository and change the origin to your new repository
 - Install [NPM](https://www.npmjs.com/)
-- Install the dependencies: `npm install` (You will need to have ruby and gem installed)
+- Install the dependencies: `npm install`
 - Edit `config.json` with your details.
 
 ## Development
