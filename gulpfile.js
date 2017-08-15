@@ -9,6 +9,7 @@ var del = require('del');
 var rename = require('gulp-rename');
 var nunjucks = require('gulp-nunjucks-render');
 var sitemap = require('gulp-sitemap');
+var minify = require('gulp-minify');
 var s3 = require('gulp-s3-upload')({ useIAM: 'true' });
 
 //User Settings
@@ -123,7 +124,7 @@ gulp.task('browserSync', function() {
 });
 
 //Cleans, runs the scripts and serves from dist
-gulp.task('serve', ['clean', 'browserSync', 'styles', 'assets', 'pages', 'sitemap', 'special'], function() {
+gulp.task('serve', ['clean', 'browserSync', 'styles', 'assets', 'pages', 'js', 'sitemap', 'special'], function() {
 	gulp.watch(styles_path, ['styles']);
 	gulp.watch(pages_path, ['pages', 'sitemap']);
 	gulp.watch(partials_path, ['pages']);
@@ -132,4 +133,4 @@ gulp.task('serve', ['clean', 'browserSync', 'styles', 'assets', 'pages', 'sitema
 });
 
 //Builds without serving
-gulp.task('build', ['clean', 'styles', 'assets', 'pages', 'sitemap', 'special']);
+gulp.task('build', ['clean', 'styles', 'assets', 'pages', 'js', 'sitemap', 'special']);
