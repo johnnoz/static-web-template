@@ -127,8 +127,8 @@ gulp.task('browserSync', function() {
 gulp.task('serve', ['clean', 'browserSync', 'styles', 'assets', 'pages', 'js', 'sitemap', 'special'], function() {
 	gulp.watch(styles_path, ['styles']);
 	gulp.watch(pages_path, ['pages', 'sitemap']);
-	gulp.watch(partials_path, ['pages']);
-    gulp.watch(special_path, ['special']);
+	gulp.watch(partials_path + '**/*.html', ['pages']);
+  gulp.watch(special_path, ['special']);
 	gulp.watch(assets_path, ['assets'])
 });
 
