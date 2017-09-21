@@ -1,9 +1,0 @@
-{
-  "root": "home",
-  "url": "https://example.com",
-  "qa_s3_bucket": "example-bucket",
-  "live_s3_bucket": "example-bucket",
-  "metadata": {
-    "Cache-Control": "max-age=2592000"
-  }
-}

@@ -11,13 +11,15 @@ var nunjucks = require('gulp-nunjucks-render');
 var sitemap = require('gulp-sitemap');
 var minify = require('gulp-minify');
 var s3 = require('gulp-s3-upload')({ useIAM: 'true' });
+var awspublish = require('gulp-awspublish');
 
 //User Settings
-var config = require("./config.json");
+var config_live = require("./config-live.json");
+var config_qa = require("./config-qa.json");
+var config = config_qa; //Use QA config by default
 var home_page = config.root; //Which page is at root
 var page_url = config.url; //Base URL of the site
-var qa_s3_bucket = config.qa_s3_bucket; //Bucket for QA deployment
-var live_s3_bucket = config.live_s3_bucket; //Bucket for live deployment
+var s3_bucket = config.s3_bucket; //S3 bucket to upload to
 var metadata = config.metadata; //File metadata
 
 var styles_path = 'src/**/*.+(scss|sass|css)';
@@ -101,21 +103,11 @@ gulp.task('assets', function() {
 });
 
 gulp.task('deploy-qa', ['build'], function() {
-    gulp.src(output_path)
-		.pipe(s3({
-			Bucket: qa_s3_bucket,
-			ACL: 'public-read',
-			Metadata: metadata
-		}))
+  gulp.start('publish');
 });
 
-gulp.task('deploy-live', ['build'], function() {
-	gulp.src(output_path)
-		.pipe(s3({
-			Bucket: live_s3_bucket,
-			ACL: 'public-read',
-			Metadata: metadata
-		}))
+gulp.task('deploy-live', ['build-live'], function() {
+  gulp.start('publish');
 });
 
 //Runs the server
@@ -132,5 +124,29 @@ gulp.task('serve', ['clean', 'browserSync', 'styles', 'assets', 'pages', 'js', '
 	gulp.watch(assets_path, ['assets'])
 });
 
+//Set config to live variables
+gulp.task('live-config', function() {
+  config = config_live;
+  home_page = config.root;
+  page_url = config.url;
+  s3_bucket = config.s3_bucket;
+  metadata = config.metadata;
+})
+
 //Builds without serving
 gulp.task('build', ['clean', 'styles', 'assets', 'pages', 'js', 'sitemap', 'special']);
+gulp.task('build-live', ['live-config', 'build']);
+
+//Publishes each file to S3, appending metadata to files matching
+gulp.task('publish', function () {
+	var publisher = awspublish.create({
+		params:{
+			Bucket: s3_bucket,
+			ACL: 'public-read',
+			Metadata: metadata
+    }
+  });
+
+  gulp.src(output_path)
+  .pipe(publisher.publish())
+});

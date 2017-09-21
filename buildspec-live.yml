@@ -6,7 +6,7 @@ phases:
       - "npm install"
   build:
     commands:
-      - "gulp deploy-qa"
+      - "gulp deploy-live"
 artifacts:
   base-directory: "dist"
   files:
