@@ -23,7 +23,7 @@ var s3_bucket = config.s3_bucket; //S3 bucket to upload to
 var metadata = config.metadata; //File metadata
 
 var styles_path = 'src/**/*.+(scss|sass|css)';
-var pages_path = 'src/pages/*.html';
+var pages_path = 'src/pages/**/*.html';
 var special_path = 'src/special/*.html';
 var partials_path = 'src/partials/';
 var assets_path = 'src/assets/**/*';
@@ -68,7 +68,7 @@ gulp.task('pages', function() {
 		.pipe(htmlmin({ collapseWhitespace: true, minifyJS: true })) //minify
 		.pipe(rename(function (path) {
 			if (path.basename !== home_page) { //main page goes at root
-                path.dirname = path.basename;
+                path.dirname = path.dirname + '/' + path.basename;
 			}
 			path.basename = 'index';
 		}))
