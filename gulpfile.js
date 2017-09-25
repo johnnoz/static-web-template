@@ -62,7 +62,7 @@ gulp.task('js', function() {
 });
 
 //Moves HTML files into dist
-gulp.task('pages', function() {
+gulp.task('pages', ['clean'], function() {
 	return gulp.src(pages_path)
 		.pipe(nunjucks({ path: partials_path }))
 		.pipe(htmlmin({ collapseWhitespace: true, minifyJS: true })) //minify
@@ -87,7 +87,7 @@ gulp.task('sitemap', ['pages'], function() {
 });
 
 //Move special pages (such as 404)
-gulp.task('special', function() {
+gulp.task('special', ['clean'], function() {
 	return gulp.src(special_path)
 		.pipe(nunjucks({ path: partials_path }))
         .pipe(htmlmin({ collapseWhitespace: true, minifyJS: true })) //minify
@@ -96,7 +96,7 @@ gulp.task('special', function() {
 });
 
 //Moves images, fonts, etc. to dist folder
-gulp.task('assets', function() {
+gulp.task('assets', ['clean'], function() {
 	return gulp.src(assets_path)
 		.pipe(gulp.dest('dist'))
 		.pipe(browserSync.reload({ stream: true }))
